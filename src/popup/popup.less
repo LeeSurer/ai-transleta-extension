@@ -1,0 +1,117 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.ait-popup {
+  width: 320px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+
+  .ait-popup-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: white;
+
+    h1 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+
+  .ait-popup-body {
+    padding: 20px;
+
+    .ait-field {
+      margin-bottom: 16px;
+
+      label {
+        display: block;
+        font-size: 13px;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 6px;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 13px;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+
+        &:focus {
+          border-color: #4f46e5;
+          box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        &::placeholder {
+          color: #9ca3af;
+        }
+      }
+    }
+
+    .ait-save-btn {
+      width: 100%;
+      padding: 10px;
+      background: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #4338ca;
+      }
+    }
+
+    .ait-tips {
+      margin-top: 16px;
+      padding: 12px;
+      background: #f9fafb;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #6b7280;
+
+      p {
+        margin: 0 0 8px 0;
+        font-weight: 500;
+        color: #374151;
+      }
+
+      ol {
+        margin: 0;
+        padding-left: 18px;
+
+        li {
+          margin-bottom: 4px;
+          line-height: 1.6;
+        }
+      }
+
+      a {
+        color: #4f46e5;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
