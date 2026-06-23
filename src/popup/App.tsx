@@ -1,19 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import { DEFAULT_PROMPT } from '../background/index';
 
 const App: React.FC = () => {
   const [apiKey, setApiKey] = useState('');
+  const [prompt, setPrompt] = useState(DEFAULT_PROMPT);
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    chrome.storage.sync.get('apiKey', (result: { apiKey?: string }) => {
-      if (result.apiKey) {
-        setApiKey(result.apiKey);
+    chrome.storage.sync.get(
+      ['apiKey', 'prompt'],
+      (result: { apiKey?: string; prompt?: string }) => {
+        if (result.apiKey) {
+          setApiKey(result.apiKey);
+        }
+        if (result.prompt) {
+          setPrompt(result.prompt);
+        }
       }
-    });
+    );
   }, []);
 
   const handleSave = () => {
-    chrome.storage.sync.set({ apiKey }, () => {
+    chrome.storage.sync.set({ apiKey, prompt }, () => {
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
     });
@@ -34,6 +42,15 @@ const App: React.FC = () => {
             value={apiKey}
             onChange={(e) => setApiKey(e.target.value)}
             placeholder="请输入你的 API Key"
+          />
+        </div>
+        <div className="ait-field">
+          <label htmlFor="promptInput">提示词</label>
+          <textarea
+            id="promptInput"
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            placeholder="请输入系统提示词"
           />
         </div>
         <button className="ait-save-btn" onClick={handleSave}>

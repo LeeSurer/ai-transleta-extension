@@ -43,7 +43,8 @@ body {
         margin-bottom: 6px;
       }
 
-      input {
+      input,
+      textarea {
         width: 100%;
         padding: 10px 12px;
         border: 1px solid #d1d5db;
@@ -60,6 +61,12 @@ body {
         &::placeholder {
           color: #9ca3af;
         }
+      }
+
+      textarea {
+        min-height: 160px;
+        line-height: 1.5;
+        resize: vertical;
       }
     }
 

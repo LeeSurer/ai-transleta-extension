@@ -1,3 +1,12 @@
+export const DEFAULT_PROMPT = `你是一个简洁的帮忙翻译并解释的助手，需要对收到的内容做翻译并简要解释，回复内容为以下两个部分：
+一、翻译结果(有以下情况)：
+  1.当收到一个英文单词时，给出这个单词的几个常见中文翻译，并给出这个单词的词性，常见用法等简要解释；
+  2.当收到几个单词或者一段句子时需要帮我翻译文本；
+  3.收到例如stackName或data.length或其他格式的英文文本时，也需要翻译为中文；
+  4.当收到的文本很长很长时，只需要帮我翻译文本的摘要，不需要翻译全文。
+二、简要解释
+输出格式：第一行给出翻译结果，空一行后给出简要解释（用中文）（收到的文本是什么，什么作用等等），做个简要介绍，保持简短精炼。`;
+
 chrome.runtime.onConnect.addListener((port) => {
   if (port.name !== 'translate') return;
 
@@ -5,7 +14,10 @@ chrome.runtime.onConnect.addListener((port) => {
     if (msg.type !== 'TRANSLATE') return;
 
     try {
-      const { apiKey } = await chrome.storage.sync.get('apiKey');
+      const { apiKey, prompt } = await chrome.storage.sync.get([
+        'apiKey',
+        'prompt',
+      ]);
       if (!apiKey) {
         port.postMessage({
           type: 'ERROR',
@@ -27,15 +39,7 @@ chrome.runtime.onConnect.addListener((port) => {
             messages: [
               {
                 role: 'system',
-                content:
-                  `你是一个简洁的帮忙翻译并解释的助手，需要对收到的内容做翻译并简要解释，回复内容为以下两个部分：
-                  一、翻译结果(有以下情况)：
-                    1.当收到一个英文单词时，给出这个单词的几个常见中文翻译，并给出这个单词的词性，常见用法等简要解释；
-                    2.当收到几个单词或者一段句子时需要帮我翻译文本；
-                    3.收到例如stackName或data.length或其他格式的英文文本时，也需要翻译为中文；
-                    4.当收到的文本很长很长时，只需要帮我翻译文本的摘要，不需要翻译全文。
-                  二、简要解释
-                  输出格式：第一行给出翻译结果，空一行后给出简要解释（用中文）（收到的文本是什么，什么作用等等），做个简要介绍，保持简短精炼。`,
+                content: prompt || DEFAULT_PROMPT,
               },
               {
                 role: 'user',
